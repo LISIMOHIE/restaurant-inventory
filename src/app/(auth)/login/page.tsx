@@ -17,21 +17,20 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out after 10s')), 10000));
-    const { data, error } = await Promise.race([
-      supabase.auth.signInWithPassword({ email, password }),
-      timeoutPromise,
-    ]) as Awaited<ReturnType<typeof supabase.auth.signInWithPassword>>;
-
-    if (error) {
-      setError(`${error.message} (${error.status})`);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        setError(`${error.message} (${error.status})`);
+      } else if (!data.session) {
+        setError('No session returned');
+      } else {
+        router.push('/dashboard');
+        router.refresh();
+      }
+    } catch (err: unknown) {
+      setError(`Exception: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
       setLoading(false);
-    } else if (!data.session) {
-      setError('No session returned — check Supabase URL config');
-      setLoading(false);
-    } else {
-      router.push('/dashboard');
-      router.refresh();
     }
   };
 
