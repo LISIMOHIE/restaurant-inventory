@@ -17,7 +17,11 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out after 10s')), 10000));
+    const { data, error } = await Promise.race([
+      supabase.auth.signInWithPassword({ email, password }),
+      timeoutPromise,
+    ]) as Awaited<ReturnType<typeof supabase.auth.signInWithPassword>>;
 
     if (error) {
       setError(`${error.message} (${error.status})`);
