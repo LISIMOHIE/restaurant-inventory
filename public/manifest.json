@@ -1,0 +1,41 @@
+{
+  "name": "Restaurant Inventory System",
+  "short_name": "Inventory",
+  "description": "نظام إدارة المخزون والطلبيات",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#1e1b4b",
+  "theme_color": "#1e1b4b",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "/dashboard",
+      "description": "View inventory dashboard"
+    },
+    {
+      "name": "Low Stock",
+      "url": "/inventory",
+      "description": "Check low stock alerts"
+    },
+    {
+      "name": "New Order",
+      "url": "/purchase-orders",
+      "description": "Create purchase order"
+    }
+  ]
+}
